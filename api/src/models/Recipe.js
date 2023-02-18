@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
     },
     stepByStep: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
     },
-  });
+  }, {timestamps: false});
 };
