@@ -1,10 +1,7 @@
-const { Router } = require('express');
-const { listTypesDietsDefault } = require('../controllers/listTypesDiets')
 const { Diet } = require('../db')
+const { listTypesDietsDefault } = require('../controllers/listTypesDiets')
 
-const router = Router();
-
-router.get('/', async (req, res) => {
+const getDietsHandlers = async (req, res) => {
     //res.send('Estoy en GET de dietas');
     try {
         listTypesDietsDefault.forEach(e => {
@@ -18,7 +15,6 @@ router.get('/', async (req, res) => {
         res.status(400).send(error);
     }
 
-});
+};
 
-
-module.exports = router;
+module.exports = {getDietsHandlers};
