@@ -1,16 +1,16 @@
-const { createRecipe, getRecipeByIdAPI, getRecipeByIdBD } = require('../controllers/recipesController')
+const { createRecipe, getRecipeByIdAPI, getRecipeByIdBD, concatAllRecipes } = require('../controllers/recipesController')
 
 
 const createRecipesHandlers = async (req, res) => {
     //res.send("Estoy haciendo post");
-    let { name, recipeSummary, healthScore, stepByStep, dietTypes } = req.body;
+    let { name, summary, healthScore, steps, dietTypes } = req.body;
     try {
         //console.log(name, recipeSummary, healthScore, stepByStep);
         let newRecipe = await createRecipe(
             name,
-            recipeSummary,
+            summary,
             healthScore,
-            stepByStep,
+            steps,
             dietTypes
         );
         res.status(200).send(newRecipe)
@@ -61,10 +61,39 @@ const getRecipeHandler = async(req, res) => {
 };
 
 //Get for name
-const getRecipesHandler = (req, res) => {
+const getRecipesHandler = async(req, res) => {
     const { name } = req.query;
     try {
-        res.send(`Estoy enviando  por query ${name} `);
+        let resultSearch = await concatAllRecipes(name);
+        //console.log(resultSearch);
+        if (name) {
+            let recipeByName = await resultSearch.filter(e => e.name.toLowerCase().includes(name.toString().toLowerCase()));
+           
+            if (recipeByName.length) {
+                let recipes = recipeByName.map(e => {
+                    return {
+                        //image: e.image,
+                        name: e.name,
+                        dietTypes: e.dietTypes ? e.dietTypes : e.diets.map(e => e.name),
+                        //score: e.score,
+                        id: e.id
+                    }
+                })
+                return res.status(200).send(recipes); 
+            }  
+            return res.status(404).send('Sorry, recipe not found')
+        } else {
+            let recipes = resultSearch.map(e => {
+                return {
+                    //image: e.image,
+                    name: e.name,
+                    dietTypes: e.dietTypes ? e.dietTypes : e.diets.map(e => e.name),
+                    //score: e.score,
+                    id: e.id
+                }
+            })
+            return res.status(200).send(recipes);
+        }
     } catch (error) {
         res.status(400).send("Errooooo " + error);
     }
