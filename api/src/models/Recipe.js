@@ -14,14 +14,14 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    recipeSummary: {
+    summary: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     healthScore: {
       type: DataTypes.FLOAT,
     },
-    stepByStep: {
+    steps: {
       type: DataTypes.STRING,
     },
   }, {timestamps: false});
