@@ -13,7 +13,7 @@ const createRecipesHandlers = async (req, res) => {
             steps,
             dietTypes
         );
-        res.status(200).send(newRecipe)
+        res.status(200).send("Creado exitosamente")
     } catch (error) {
         res.status(400).send("Errooooo " + error);
     }
