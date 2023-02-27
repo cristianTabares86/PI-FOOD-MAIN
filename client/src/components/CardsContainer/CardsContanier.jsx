@@ -46,6 +46,7 @@ const CardsContainer = () => {
         <div className={style.container}>
             {recipes.map(recipe => {
                 return <Card 
+                    image={recipe.image}
                     name = {recipe.name}
                     dietTypes = {recipe.dietTypes}
                     id = {recipe.id}
