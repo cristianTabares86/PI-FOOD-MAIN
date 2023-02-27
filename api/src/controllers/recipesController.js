@@ -74,7 +74,8 @@ const getAllRecipesBD = async () => {
 const concatAllRecipes = async (name) => {
     const dataApi = await getAllRecipesAPI();
     const dataBD = await getAllRecipesBD();
-    const allData = dataApi.concat(dataBD);
+    //const allData = dataBD;
+    const allData = dataApi.concat(dataBD); //!solo para verificar activar una vez termine
     console.log(dataBD)
 
     return allData;
