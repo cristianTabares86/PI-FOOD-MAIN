@@ -24,7 +24,9 @@ const getRecipeHandler = async(req, res) => {
     const { id } = req.params;
     try {
         if (/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(id)) {
-            let resultBD = await getRecipeByIdBD(id);            
+            let resultBD = await getRecipeByIdBD(id);
+            // console.log("Aqui entre por id en BD")   
+            // console.log(resultBD);         
             return res.status(200).json(resultBD)
         }else{
             //console.log("yooo entre aqui")
@@ -85,7 +87,7 @@ const getRecipesHandler = async(req, res) => {
         } else {
             let recipes = resultSearch.map(e => {
                 return {
-                    //image: e.image,
+                    image: e.image,
                     name: e.name,
                     dietTypes: e.dietTypes ? e.dietTypes : e.diets.map(e => e.name),
                     //score: e.score,
